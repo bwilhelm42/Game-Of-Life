@@ -1,0 +1,9 @@
+Creating a visual display
+    Frameworks? SDL seems good, but maybe overkill. Netbpm is a possible option, but maybe too much work to print simple images
+        As of now, planning on using SDL
+    display every frame to show movement?
+    display just the fram of repetition? <-- This one is more inline with monitoring performance advancements
+
+Evaluating oscilating board states
+    use a constant max cycle number <-- straight forward and logical, but breaks badly if the cycle exceeds this value
+    need a fixed board size in the event of a shape that infinitely generates in order to force some kind of 'steady' states
