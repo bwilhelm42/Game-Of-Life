@@ -7,3 +7,27 @@ Creating a visual display
 Evaluating oscilating board states
     use a constant max cycle number <-- straight forward and logical, but breaks badly if the cycle exceeds this value
     need a fixed board size in the event of a shape that infinitely generates in order to force some kind of 'steady' states
+
+
+Ideas for how the program should execute:
+
+Primary:
+    1) Display an interactable grid where the user can select squares to give a starting state for the game
+    2) Determine runtime mode (fast or slow)
+        fast mode: execute the code as quickly as possible, this is the main point so we can benchmark performance
+        slow mode: execute the code with delays between each frame so the user can track how each scene is evolving
+    3) Display perceived "stead state" with total runtime
+
+
+
+Using These 3 public variables, I can make the block and thread count flexible for different GPUs:
+
+int cudaDeviceProp::multiProcessorCount [inherited]
+int cudaDeviceProp::maxBlocksPerMultiProcessor [inherited]
+int cudaDeviceProp::maxThreadsPerBlock [inherited]
+
+
+careful with if statements as to not cause "warp divergence" since each warp is meant to execute the same set of 
+instructions, in the situation where an if statement causes 1+ threads in a warp to start completing a different
+opteration, performance can suffer. If one warp has multiple different opterations to perform by different threads
+it will end up running them sequentially rather than concurrently.
