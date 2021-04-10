@@ -11,9 +11,9 @@
 #define WINDOW_H (GRID_H * CELL_SIZE) + 1
 #define WINDOW_W (GRID_W * CELL_SIZE) + 1
 
-bool** init_world(SDL_Renderer *renderer);
-void    run_simulation(bool** scene, SDL_Renderer *renderer);
-bool**	allocate_grid();
+int**   init_world(SDL_Renderer *renderer);
+void    run_simulation(int** scene, SDL_Renderer *renderer);
+int**	allocate_grid();
 void	draw_grid(SDL_Renderer *renderer);
 
 #endif

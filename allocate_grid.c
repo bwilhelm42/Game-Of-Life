@@ -1,12 +1,14 @@
 #include "sdl_grid.h"
 
-bool**	allocate_grid() {
-	bool **temp;
+int**	allocate_grid() {
+	int **temp;
 
-	temp = (bool**)malloc(sizeof(bool*) * GRID_H);
+	temp = (int**)malloc(sizeof(int*) * GRID_H);
 	for (int i = 0; i < GRID_H; i++) {
-		temp[i] = (bool*)malloc(sizeof(bool) * GRID_W);
-		bzero(temp[i], GRID_W);
+		temp[i] = (int*)malloc(sizeof(int) * GRID_W);
+		for (int j = 0; j < GRID_W; j++) {
+			temp[i][j] = 0;
+		}
 	}
 	return temp;
 }

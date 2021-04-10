@@ -19,6 +19,6 @@ clean:
 	rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(EXEC)
+	rm -f $(EXEC) $(DEBUG)
 
 re: fclean all

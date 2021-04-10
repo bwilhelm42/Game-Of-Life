@@ -3,7 +3,7 @@
 int main() {
 	SDL_Window *window;
 	SDL_Renderer *renderer;
-	bool** scene;
+	int** scene;
 
 	if (SDL_Init(SDL_INIT_VIDEO) == -1){
 		printf("Couldn't initialize SDL2: %s", SDL_GetError());
