@@ -7,8 +7,15 @@ void    run_simulation(int** scene, SDL_Renderer *renderer) {
     int** updated_scene = allocate_grid();
     int** temp;
     bool scene_change = true;
+    SDL_Event event;
 
     while (scene_change) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
+                SDL_Quit();
+                return;
+            }
+        }
         scene_change = false;
         draw_grid(renderer);
         for (int i = 0; i < GRID_H; i++) {
