@@ -15,5 +15,6 @@ int**   init_world(SDL_Renderer *renderer);
 void    run_simulation(int** scene, SDL_Renderer *renderer);
 int**	allocate_grid();
 void	draw_grid(SDL_Renderer *renderer);
+void    free_2d_array(int x, int** array);
 
 #endif

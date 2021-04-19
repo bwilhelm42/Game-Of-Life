@@ -8,11 +8,14 @@ void    run_simulation(int** scene, SDL_Renderer *renderer) {
     int** temp;
     bool scene_change = true;
     SDL_Event event;
+    int x = 0;
 
-    while (scene_change) {
+    while (scene_change && x++ < 100) {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
                 SDL_Quit();
+                free_2d_array(GRID_H, scene);
+                free_2d_array(GRID_H, updated_scene);
                 return;
             }
         }
@@ -35,6 +38,8 @@ void    run_simulation(int** scene, SDL_Renderer *renderer) {
         SDL_RenderPresent(renderer);
         SDL_Delay(100);
     }
+    free_2d_array(GRID_H, scene);
+    free_2d_array(GRID_H, updated_scene);
     return;
 }
 
@@ -62,7 +67,7 @@ static int evaluate_cell(int i, int j, int** scene) {
     (i > 0 && scene[i - 1][j]) +
     (i < GRID_H - 1 && scene[i + 1][j]) +
 
-    (i > 0 && j < GRID_W && scene[i - 1][j + 1]) +
+    (i > 0 && j < GRID_W - 1 && scene[i - 1][j + 1]) +
     (j < GRID_W - 1 && scene[i][j + 1]) +
     (i < GRID_H - 1 && j < GRID_W - 1 && scene[i + 1][j + 1]);
     return (alive_cells == 3 || (alive_cells == 2 && scene[i][j] == 1));

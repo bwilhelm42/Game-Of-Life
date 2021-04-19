@@ -49,6 +49,7 @@ int**  init_world(SDL_Renderer *renderer) {
 		SDL_RenderPresent(renderer);
 	}
 	SDL_Quit();
+	free_2d_array(GRID_H, scene);
 	return NULL;
 }
 
