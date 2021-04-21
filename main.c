@@ -3,7 +3,12 @@
 int main() {
 	SDL_Window *window;
 	SDL_Renderer *renderer;
-	int** scene;
+	int**	scene;
+	int		delay;
+
+	if ((delay = get_run_mode()) == -1) {
+		return -1;
+	}
 
 	if (SDL_Init(SDL_INIT_VIDEO) == -1){
 		printf("Couldn't initialize SDL2: %s", SDL_GetError());
@@ -18,6 +23,14 @@ int main() {
 	if (scene == NULL) {
 		return -1;
 	}
-	run_simulation(scene, renderer);
+
+	struct timespec start, end;
+	clock_gettime(CLOCK_REALTIME, &start);
+
+	run_simulation(scene, renderer, delay);
+
+	clock_gettime(CLOCK_REALTIME, &end);
+	double time_spent = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / BILLION;
+	printf("Total simulation runtime: %f\n", time_spent);
 	return 1;
 }

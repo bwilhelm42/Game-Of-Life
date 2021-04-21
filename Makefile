@@ -1,11 +1,12 @@
 EXEC = grid
 DEBUG = debug
-SRC_BASENAME = main init_world run_simulation allocate_grid draw_grid free_2d_array
+SRC_BASENAME = main init_world run_simulation allocate_grid draw_grid free_2d_array get_run_mode
 SRCS = $(addsuffix .c, $(SRC_BASENAME))
 OBJS = $(addsuffix .o, $(notdir $(SRC_BASENAME)))
 LIBS = -lSDL2
 INCLUDES = SDL2
-CFLAGS += -Wall -Wextra -Werror -fsanitize=address
+FSANITIZE = -fsanitize=address
+CFLAGS += -Wall -Wextra -Werror
 CC = gcc
 
 .PHONY: clean fclean re all

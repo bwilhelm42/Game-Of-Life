@@ -3,16 +3,21 @@
 
 #include <SDL2/SDL.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
 
-#define CELL_SIZE 36
-#define GRID_H 30
-#define GRID_W 30
+#define CELL_SIZE 26
+#define GRID_H 45
+#define GRID_W 90
 #define WINDOW_H (GRID_H * CELL_SIZE) + 1
 #define WINDOW_W (GRID_W * CELL_SIZE) + 1
 
+#define BILLION 1000000000.0
+
 int**   init_world(SDL_Renderer *renderer);
-void    run_simulation(int** scene, SDL_Renderer *renderer);
+int     get_run_mode();
+void    run_simulation(int** scene, SDL_Renderer *renderer, int delay);
 int**	allocate_grid();
 void	draw_grid(SDL_Renderer *renderer);
 void    free_2d_array(int x, int** array);
