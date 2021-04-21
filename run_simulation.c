@@ -3,14 +3,14 @@
 static int evaluate_cell(int i, int j, int** scene);
 static void render_box(int y, int x, SDL_Renderer* renderer);
 
-void    run_simulation(int** scene, SDL_Renderer *renderer) {
+void    run_simulation(int** scene, SDL_Renderer *renderer, int delay) {
     int** updated_scene = allocate_grid();
     int** temp;
     bool scene_change = true;
     SDL_Event event;
     int x = 0;
 
-    while (scene_change && x++ < 100) {
+    while (scene_change && x++ < 100000) {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
                 SDL_Quit();
@@ -36,7 +36,7 @@ void    run_simulation(int** scene, SDL_Renderer *renderer) {
         updated_scene = scene;
         scene = temp;
         SDL_RenderPresent(renderer);
-        SDL_Delay(100);
+        SDL_Delay(delay);
     }
     free_2d_array(GRID_H, scene);
     free_2d_array(GRID_H, updated_scene);

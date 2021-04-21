@@ -11,6 +11,6 @@ void	draw_grid(SDL_Renderer *renderer) {
 		SDL_RenderDrawLine(renderer, x, 0, x, WINDOW_H);
 	}
 	for (int y = 0; y < WINDOW_H; y += CELL_SIZE) {
-		SDL_RenderDrawLine(renderer, 0, y, WINDOW_H, y);
+		SDL_RenderDrawLine(renderer, 0, y, WINDOW_W, y);
 	}
 }
