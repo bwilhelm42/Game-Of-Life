@@ -15,7 +15,11 @@
 
 #define BILLION 1000000000.0
 
-int**   init_world(SDL_Renderer *renderer);
+#define GPU 0
+#define CPU 1
+#define MODE GPU
+
+int*    init_world(SDL_Renderer *renderer);
 int     get_run_mode();
 void    run_simulation(int** scene, SDL_Renderer *renderer, int delay);
 int**	allocate_grid();

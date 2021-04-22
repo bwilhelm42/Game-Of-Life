@@ -1,15 +1,15 @@
 #include "sdl_grid.h"
 
-static void remove_from_scene(SDL_MouseButtonEvent event, int** scene);
-static void	draw_boxes(SDL_Renderer *renderer, int** scene);
-static void add_to_scene(SDL_MouseButtonEvent event, int** scene);
+static void remove_from_scene(SDL_MouseButtonEvent event, int* scene);
+static void	draw_boxes(SDL_Renderer *renderer, int* scene);
+static void add_to_scene(SDL_MouseButtonEvent event, int* scene);
 
-int**  init_world(SDL_Renderer *renderer) {
+int*  init_world(SDL_Renderer *renderer) {
 	SDL_Event event;
 	bool quit = false;
-	int **scene;
+	int *scene;
 
-	scene = allocate_grid();
+	cudaMallocManaged(&scene, GRID_H * GRID_W * sizeof(int));
 
 	while (quit == false){
 		SDL_WaitEvent(&event);
@@ -53,20 +53,20 @@ int**  init_world(SDL_Renderer *renderer) {
 	return NULL;
 }
 
-static void add_to_scene(SDL_MouseButtonEvent event, int** scene) {
+static void add_to_scene(SDL_MouseButtonEvent event, int* scene) {
 	int x = event.x / CELL_SIZE;
 	int y = event.y / CELL_SIZE;
 
-	scene[y][x] = 1;
+	scene[y * GRID_W + x] = 1;
 }
 
-static void remove_from_scene(SDL_MouseButtonEvent event, int** scene) {
+static void remove_from_scene(SDL_MouseButtonEvent event, int* scene) {
 	int x = event.x / CELL_SIZE;
 	int y = event.y / CELL_SIZE;
 
-	scene[y][x] = 0;
+	scene[y * GRID_W + x] = 0;
 }
-static void	draw_boxes(SDL_Renderer *renderer, int** scene) {
+static void	draw_boxes(SDL_Renderer *renderer, int* scene) {
 	SDL_Color box_color = {.r = 240, .g = 240, .b = 240, .a = 240};
 	SDL_Rect box = {
 		.h = CELL_SIZE - 1,
@@ -76,7 +76,7 @@ static void	draw_boxes(SDL_Renderer *renderer, int** scene) {
 	SDL_SetRenderDrawColor(renderer, box_color.r, box_color.g, box_color.b, box_color.a);
 	for (int i = 0; i < GRID_H; i++) {
 		for (int j = 0; j < GRID_W; j++) {
-			if (scene[i][j] == 1) {
+			if (scene[i * GRID_H + j] == 1) {
 				box.x = j * CELL_SIZE;
 				box.y = i * CELL_SIZE;
 				SDL_RenderFillRect(renderer, &box);

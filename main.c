@@ -27,7 +27,16 @@ int main() {
 	struct timespec start, end;
 	clock_gettime(CLOCK_REALTIME, &start);
 
-	run_simulation(scene, renderer, delay);
+	switch (MODE) {
+		case CPU:
+			run_simulation(scene, renderer, delay);
+			break;
+		case GPU:
+			run_simulation_cuda(scene, renderer, delay);
+			break;
+		default:
+			break;
+	}
 
 	clock_gettime(CLOCK_REALTIME, &end);
 	double time_spent = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / BILLION;
