@@ -21,9 +21,6 @@ $(EXEC): $(OBJS)
 %.o: %.cu
 	$(CC) -I $(INCLUDES) -c $< $(LIBS)
 
-check : 
-	$(info $$OBJS is [$(OBJS)])
-
 clean:
 	rm -f $(OBJS)
 

@@ -68,10 +68,9 @@ static void remove_from_scene(SDL_MouseButtonEvent event, int* scene) {
 }
 static void	draw_boxes(SDL_Renderer *renderer, int* scene) {
 	SDL_Color box_color = {.r = 240, .g = 240, .b = 240, .a = 240};
-	SDL_Rect box = {
-		.h = CELL_SIZE - 1,
-		.w = CELL_SIZE - 1,
-	};
+	SDL_Rect box;
+	box.h = CELL_SIZE - 1;
+	box.w = CELL_SIZE - 1;
 
 	SDL_SetRenderDrawColor(renderer, box_color.r, box_color.g, box_color.b, box_color.a);
 	for (int i = 0; i < GRID_H; i++) {
