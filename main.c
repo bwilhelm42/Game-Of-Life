@@ -3,7 +3,7 @@
 int main() {
 	SDL_Window *window;
 	SDL_Renderer *renderer;
-	int**	scene;
+	int*	scene;
 	int		delay;
 
 	if ((delay = get_run_mode()) == -1) {

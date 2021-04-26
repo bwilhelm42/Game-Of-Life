@@ -21,7 +21,8 @@
 
 int*    init_world(SDL_Renderer *renderer);
 int     get_run_mode();
-void    run_simulation(int** scene, SDL_Renderer *renderer, int delay);
+void    run_simulation(int* scene, SDL_Renderer *renderer, int delay);
+void    run_simulation_cuda(int* scene, SDL_Renderer *renderer, int delay);
 int**	allocate_grid();
 void	draw_grid(SDL_Renderer *renderer);
 void    free_2d_array(int x, int** array);

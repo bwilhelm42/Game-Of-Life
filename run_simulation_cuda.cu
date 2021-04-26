@@ -1,9 +1,9 @@
 #include "sdl_grid.h"
 
-static int evaluate_cell(int i, int j, int** scene);
+static int evaluate_cell(int i, int j, int* scene);
 static void render_box(int y, int x, SDL_Renderer* renderer);
 
-void    run_simulation_cuda(int** scene, SDL_Renderer *renderer, int delay) {
+void    run_simulation_cuda(int* scene, SDL_Renderer *renderer, int delay) {
     int* updated_scene, temp;
     int x = 0;
     int N = GRID_H * GRID_W;
