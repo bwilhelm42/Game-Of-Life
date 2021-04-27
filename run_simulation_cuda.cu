@@ -1,9 +1,11 @@
-#include "sdl_grid.h"
+extern "C" {
+    #include "sdl_grid.h"
+}
 
 __global__ static void evaluate_cell(int* scene, int* updated_scene, int N);
 static void render_box(int y, int x, SDL_Renderer* renderer);
 
-void    run_simulation_cuda(int* scene, SDL_Renderer *renderer, int delay) {
+extern "C" void    run_simulation_cuda(int* scene, SDL_Renderer *renderer, int delay) {
     int *updated_scene, *temp;
     int x = 0;
     int N = GRID_H * GRID_W;
@@ -12,6 +14,15 @@ void    run_simulation_cuda(int* scene, SDL_Renderer *renderer, int delay) {
 
     while (x++ < 100000) {
         evaluate_cell<<<GRID_H, GRID_W>>>(scene, updated_scene, N);
+        /*
+        draw_grid(renderer);
+        for (int i = 0; i < N; i++) {
+            if (scene[i]) {
+                render_box(i / GRID_H, i % GRID_H, renderer);
+            }
+        }
+        SDL_RenderPresent(renderer);
+        */
         temp = updated_scene;
         updated_scene = scene;
         scene = temp;

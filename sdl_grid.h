@@ -8,8 +8,8 @@
 #include <time.h>
 
 #define CELL_SIZE 26
-#define GRID_H 45
-#define GRID_W 90
+#define GRID_H 40
+#define GRID_W 40
 #define WINDOW_H (GRID_H * CELL_SIZE) + 1
 #define WINDOW_W (GRID_W * CELL_SIZE) + 1
 

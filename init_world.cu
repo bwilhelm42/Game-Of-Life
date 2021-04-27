@@ -1,10 +1,12 @@
-#include "sdl_grid.h"
+extern "C" {
+	#include "sdl_grid.h"
+}
 
 static void remove_from_scene(SDL_MouseButtonEvent event, int* scene);
 static void	draw_boxes(SDL_Renderer *renderer, int* scene);
 static void add_to_scene(SDL_MouseButtonEvent event, int* scene);
 
-int*  init_world(SDL_Renderer *renderer) {
+extern "C" int*  init_world(SDL_Renderer *renderer) {
 	SDL_Event event;
 	bool quit = false;
 	int *scene;
