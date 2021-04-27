@@ -17,7 +17,7 @@
 
 #define GPU 0
 #define CPU 1
-#define MODE GPU
+#define MODE CPU
 
 int*    init_world(SDL_Renderer *renderer);
 int     get_run_mode();

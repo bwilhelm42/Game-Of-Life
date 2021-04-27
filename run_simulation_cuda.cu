@@ -2,19 +2,20 @@ extern "C" {
     #include "sdl_grid.h"
 }
 
-__global__ static void evaluate_cell(int* scene, int* updated_scene, int N);
+__global__ static void evaluate_cell(int* h_scene, int* updated_scene, int N);
 static void render_box(int y, int x, SDL_Renderer* renderer);
 
-extern "C" void    run_simulation_cuda(int* scene, SDL_Renderer *renderer, int delay) {
-    int *updated_scene, *temp;
+extern "C" void    run_simulation_cuda(int* h_scene, SDL_Renderer *renderer, int delay) {
+    int *updated_scene, *temp, *scene;
     int x = 0;
     int N = GRID_H * GRID_W;
 
     cudaMallocManaged(&updated_scene, GRID_H * GRID_W * sizeof(int));
+    cudaMallocManaged(&scene, GRID_H * GRID_W * sizeof(int));
+    cudaMemcpy(scene, h_scene, GRID_H * GRID_W * sizeof(int), cudaMemcpyHostToDevice);
 
-    while (x++ < 100000) {
+    while (x++ < 1000000) {
         evaluate_cell<<<GRID_H, GRID_W>>>(scene, updated_scene, N);
-        /*
         draw_grid(renderer);
         for (int i = 0; i < N; i++) {
             if (scene[i]) {
@@ -22,13 +23,13 @@ extern "C" void    run_simulation_cuda(int* scene, SDL_Renderer *renderer, int d
             }
         }
         SDL_RenderPresent(renderer);
-        */
         temp = updated_scene;
         updated_scene = scene;
         scene = temp;
     }
     cudaFree(updated_scene);
     cudaFree(scene);
+    free(h_scene);
     return;
 }
 
