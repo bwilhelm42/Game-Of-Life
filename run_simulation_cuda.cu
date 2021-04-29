@@ -9,20 +9,24 @@ extern "C" void    run_simulation_cuda(int* h_scene, SDL_Renderer *renderer, int
     int *updated_scene, *temp, *scene;
     int x = 0;
     int N = GRID_H * GRID_W;
+    SDL_Event event;
 
     cudaMallocManaged(&updated_scene, GRID_H * GRID_W * sizeof(int));
     cudaMallocManaged(&scene, GRID_H * GRID_W * sizeof(int));
     cudaMemcpy(scene, h_scene, GRID_H * GRID_W * sizeof(int), cudaMemcpyHostToDevice);
 
-    while (x++ < 1000000) {
-        evaluate_cell<<<GRID_H, GRID_W>>>(scene, updated_scene, N);
-        draw_grid(renderer);
-        for (int i = 0; i < N; i++) {
-            if (scene[i]) {
-                render_box(i / GRID_H, i % GRID_H, renderer);
+    while (x++ < NUM_ITERATIONS) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
+                SDL_Quit();
+                return;
             }
         }
-        SDL_RenderPresent(renderer);
+        evaluate_cell<<<GRID_H, GRID_W>>>(scene, updated_scene, N);
+        if (delay) {
+            scene_update(updated_scene, renderer);
+            SDL_Delay(delay);
+        }
         temp = updated_scene;
         updated_scene = scene;
         scene = temp;
@@ -31,19 +35,6 @@ extern "C" void    run_simulation_cuda(int* h_scene, SDL_Renderer *renderer, int
     cudaFree(scene);
     free(h_scene);
     return;
-}
-
-static void render_box(int y, int x, SDL_Renderer* renderer) {
-	SDL_Color box_color = {.r = 240, .g = 240, .b = 240, .a = 240};
-    SDL_Rect rect;
-    
-    rect.h = CELL_SIZE - 1;
-    rect.w = CELL_SIZE - 1;
-    rect.x = x * CELL_SIZE;
-    rect.y = y * CELL_SIZE;
-
-    SDL_SetRenderDrawColor(renderer, box_color.r, box_color.g, box_color.b, box_color.a);
-    SDL_RenderFillRect(renderer, &rect);
 }
 
 __global__

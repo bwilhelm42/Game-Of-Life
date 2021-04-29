@@ -4,12 +4,11 @@ int main() {
 	SDL_Window *window;
 	SDL_Renderer *renderer;
 	int*	scene;
-	int		delay;
+	struct runtime_info info;
 
-	if ((delay = get_run_mode()) == -1) {
+	if (get_run_mode(&info) == -1) {
 		return -1;
 	}
-
 	if (SDL_Init(SDL_INIT_VIDEO) == -1){
 		printf("Couldn't initialize SDL2: %s", SDL_GetError());
         return -1;
@@ -19,20 +18,19 @@ int main() {
 		return -1;
 	}
 
-	scene = init_world(renderer);
-	if (scene == NULL) {
+	if ((scene = init_world(renderer)) == NULL) {
 		return -1;
 	}
 
 	struct timespec start, end;
 	clock_gettime(CLOCK_REALTIME, &start);
 
-	switch (MODE) {
+	switch (info.device) {
 		case CPU:
-			run_simulation(scene, renderer, delay);
+			run_simulation(scene, renderer, info.delay);
 			break;
 		case GPU:
-			run_simulation_cuda(scene, renderer, delay);
+			run_simulation_cuda(scene, renderer, info.delay);
 			break;
 		default:
 			break;

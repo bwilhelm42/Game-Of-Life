@@ -10,6 +10,7 @@ int*  init_world(SDL_Renderer *renderer) {
 	int *scene;
 
 	scene = (int*)malloc(sizeof(int) * GRID_H * GRID_W);
+	bzero(scene, sizeof(int) * GRID_W * GRID_H);
 
 	while (quit == false){
 		SDL_WaitEvent(&event);
