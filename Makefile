@@ -21,6 +21,9 @@ $(EXEC): $(OBJS)
 %.o: %.cu
 	$(CC) -I $(INCLUDES) -c $< $(LIBS)
 
+profile:
+	~/nsight-systems-2021.2.1/bin/nsys profile ./$(EXEC)
+
 clean:
 	rm -f $(OBJS)
 

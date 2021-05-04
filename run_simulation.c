@@ -11,7 +11,7 @@ void    run_simulation(int* scene, SDL_Renderer *renderer, int delay) {
 
     updated_scene = (int*)malloc(sizeof(int) * GRID_H * GRID_W);
 
-    while (scene_change && x++ < NUM_ITERATIONS) {
+    while (x++ < NUM_ITERATIONS) {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
                 SDL_Quit();

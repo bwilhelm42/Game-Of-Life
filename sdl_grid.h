@@ -7,14 +7,13 @@
 #include <stdbool.h>
 #include <time.h>
 
-#define CELL_SIZE 30
-#define GRID_H 60
-#define GRID_W 60
+#define CELL_SIZE 1
+#define GRID_H 4000
+#define GRID_W 4000
 #define WINDOW_H (GRID_H * CELL_SIZE) + 1
 #define WINDOW_W (GRID_W * CELL_SIZE) + 1
 
-#define BILLION 1000000000.0
-#define NUM_ITERATIONS 10000
+#define NUM_ITERATIONS 100
 
 #define GPU 0
 #define CPU 1

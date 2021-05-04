@@ -22,8 +22,8 @@ int main() {
 		return -1;
 	}
 
-	struct timespec start, end;
-	clock_gettime(CLOCK_REALTIME, &start);
+	clock_t t;
+	t = clock();
 
 	switch (info.device) {
 		case CPU:
@@ -36,8 +36,9 @@ int main() {
 			break;
 	}
 
-	clock_gettime(CLOCK_REALTIME, &end);
-	double time_spent = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / BILLION;
-	printf("Total simulation runtime: %f\n", time_spent);
+	t = clock() - t;
+	double time = (double)t / CLOCKS_PER_SEC;
+	printf("Time spent: %f\n", time);
+
 	return 1;
 }
