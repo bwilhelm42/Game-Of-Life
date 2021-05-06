@@ -13,13 +13,19 @@ int main() {
 		printf("Couldn't initialize SDL2: %s", SDL_GetError());
         return -1;
 	}
-	if (SDL_CreateWindowAndRenderer(WINDOW_W, WINDOW_H, 0, &window, &renderer) == -1) {
-		printf("Could not initialize window: %s", SDL_GetError());
-		return -1;
-	}
 
-	if ((scene = init_world(renderer)) == NULL) {
-		return -1;
+	if (info.delay == 0) {
+		scene = (int*)malloc(sizeof(int) * GRID_H * GRID_W);
+		bzero(scene, sizeof(int) * GRID_W * GRID_H);
+	} 
+	else {
+		if (SDL_CreateWindowAndRenderer(WINDOW_W, WINDOW_H, 0, &window, &renderer) == -1) {
+			printf("Could not initialize window: %s", SDL_GetError());
+			return -1;
+		}
+		if ((scene = init_world(renderer)) == NULL) {
+			return -1;
+		}
 	}
 
 	clock_t t;
@@ -40,5 +46,5 @@ int main() {
 	double time = (double)t / CLOCKS_PER_SEC;
 	printf("Time spent: %f\n", time);
 
-	return 1;
+	return 0;
 }
