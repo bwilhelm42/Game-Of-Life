@@ -31,3 +31,13 @@ careful with if statements as to not cause "warp divergence" since each warp is 
 instructions, in the situation where an if statement causes 1+ threads in a warp to start completing a different
 opteration, performance can suffer. If one warp has multiple different opterations to perform by different threads
 it will end up running them sequentially rather than concurrently.
+
+Right now largest memory suck is the initial HtoD memory transfer because it it using pageable data instead of pinned data. The issue is that since the memory is being
+allocated in a seperate file that has a ".c" extension, I am unable to use cudaMallocHost() to allocate is as pinned data. Currently the only solution I can come up with
+is to turn the initializer file into a ".cu" cuda file. While there is nothing inherently wrong with doing this I don't like the idea of making an entire file a cuda file
+just for one line of memory allocation.
+
+WHAT IS MY REASONING FOR USING AS FEW CUDA FILES AS POSSIBLE???
+I do this to maintain clarity of code. I believe that with many file, if I'm able to only utilize files with a .cu extension on fragments of code that are running the kernels
+it is much easier to pick apart the code and pinpoint where cuda is being used. As mentioned above, I may make a slight exception to this rule so I can create pinned memory for
+a different function.

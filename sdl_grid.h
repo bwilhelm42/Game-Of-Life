@@ -13,7 +13,7 @@
 #define WINDOW_H (GRID_H * CELL_SIZE) + 1
 #define WINDOW_W (GRID_W * CELL_SIZE) + 1
 
-#define NUM_ITERATIONS 1
+#define NUM_ITERATIONS 100
 
 #define GPU 0
 #define CPU 1
