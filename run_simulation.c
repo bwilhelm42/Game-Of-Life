@@ -33,7 +33,6 @@ void    run_simulation(int* scene, SDL_Renderer *renderer, int delay) {
         updated_scene = scene;
         scene = temp;
     }
-    free(scene);
     free(updated_scene);
     return;
 }

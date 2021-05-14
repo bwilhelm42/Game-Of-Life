@@ -4,13 +4,9 @@ static void remove_from_scene(SDL_MouseButtonEvent event, int* scene);
 static void	draw_boxes(SDL_Renderer *renderer, int* scene);
 static void add_to_scene(SDL_MouseButtonEvent event, int* scene);
 
-int*  init_world(SDL_Renderer *renderer) {
+void	init_world(int *scene, SDL_Renderer *renderer) {
 	SDL_Event event;
 	bool quit = false;
-	int *scene;
-
-	scene = (int*)malloc(sizeof(int) * GRID_H * GRID_W);
-	bzero(scene, sizeof(int) * GRID_W * GRID_H);
 
 	while (quit == false){
 		SDL_WaitEvent(&event);
@@ -24,7 +20,7 @@ int*  init_world(SDL_Renderer *renderer) {
 			case SDL_KEYDOWN:
 				switch (event.key.keysym.sym) {
 					case SDLK_RETURN:
-						return scene;
+						return;
 					case SDLK_ESCAPE:
 						quit = true;
 						break;
@@ -50,8 +46,7 @@ int*  init_world(SDL_Renderer *renderer) {
 		SDL_RenderPresent(renderer);
 	}
 	SDL_Quit();
-	free(scene);
-	return NULL;
+	return;
 }
 
 static void add_to_scene(SDL_MouseButtonEvent event, int* scene) {

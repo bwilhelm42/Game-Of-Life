@@ -1,4 +1,6 @@
-#include "sdl_grid.h"
+extern "C" {
+    #include "sdl_grid.h"
+}
 
 int main() {
 	SDL_Window *window;
@@ -14,18 +16,14 @@ int main() {
         return -1;
 	}
 
-	if (info.delay == 0) {
-		scene = (int*)malloc(sizeof(int) * GRID_H * GRID_W);
-		bzero(scene, sizeof(int) * GRID_W * GRID_H);
-	} 
-	else {
+	cudaMallocHost(&scene, sizeof(int) * GRID_W * GRID_H);
+	bzero(scene, sizeof(int) * GRID_W * GRID_H);
+	if (info.delay > 0) {
 		if (SDL_CreateWindowAndRenderer(WINDOW_W, WINDOW_H, 0, &window, &renderer) == -1) {
 			printf("Could not initialize window: %s", SDL_GetError());
 			return -1;
 		}
-		if ((scene = init_world(renderer)) == NULL) {
-			return -1;
-		}
+		init_world(scene, renderer);
 	}
 
 	clock_t t;
@@ -41,6 +39,7 @@ int main() {
 		default:
 			break;
 	}
+    cudaFree(scene);
 
 	t = clock() - t;
 	double time = (double)t / CLOCKS_PER_SEC;
