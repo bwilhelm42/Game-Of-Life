@@ -8,12 +8,12 @@
 #include <time.h>
 
 #define CELL_SIZE 25
-#define GRID_H 46300
-#define GRID_W 46300
+#define GRID_H 4000
+#define GRID_W 4000
 #define WINDOW_H (GRID_H * CELL_SIZE) + 1
 #define WINDOW_W (GRID_W * CELL_SIZE) + 1
 
-#define NUM_ITERATIONS 1
+#define NUM_ITERATIONS 20
 
 #define GPU 0
 #define CPU 1
@@ -23,7 +23,7 @@ struct runtime_info {
     int delay;
 };
 
-int*    init_world(SDL_Renderer *renderer);
+void    init_world(int* scene, SDL_Renderer *renderer);
 int     get_run_mode(struct runtime_info *info);
 void    run_simulation(int* scene, SDL_Renderer *renderer, int delay);
 void    run_simulation_cuda(int* scene, SDL_Renderer *renderer, int delay);

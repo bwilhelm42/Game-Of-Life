@@ -12,6 +12,9 @@ extern "C" void    run_simulation_cuda(int* h_scene, SDL_Renderer *renderer, int
     cudaError_t error;
 
     cudaMallocManaged(&updated_scene, GRID_H * GRID_W * sizeof(int));
+    if ((error = cudaGetLastError())) {
+        printf("ERROR: %s\n", cudaGetErrorString(error));
+    }
     cudaMallocManaged(&scene, GRID_H * GRID_W * sizeof(int));
     cudaMemcpy(scene, h_scene, GRID_H * GRID_W * sizeof(int), cudaMemcpyHostToDevice);
 
@@ -22,21 +25,19 @@ extern "C" void    run_simulation_cuda(int* h_scene, SDL_Renderer *renderer, int
                 return;
             }
         }
-        evaluate_cell<<<1024, 1024>>>(scene, updated_scene, N);
-        if ((error = cudaGetLastError())) {
-            printf("ERROR: %s\n", cudaGetErrorString(error));
-        }
+        evaluate_cell<<<128, 128>>>(scene, updated_scene, N);
+        cudaMemcpy(h_scene, updated_scene, sizeof(int) * GRID_H * GRID_W, cudaMemcpyDeviceToHost);
         if (delay) {
-            scene_update(updated_scene, renderer);
+            scene_update(h_scene, renderer);
             SDL_Delay(delay);
         }
-        temp = updated_scene;
-        updated_scene = scene;
-        scene = temp;
+        temp = scene;
+        scene = updated_scene;
+        updated_scene = temp;
     }
     cudaFree(updated_scene);
     cudaFree(scene);
-    free(h_scene);
+    cudaFree(h_scene);
     return;
 }
 
