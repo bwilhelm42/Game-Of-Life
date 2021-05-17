@@ -1,6 +1,6 @@
 EXEC = grid
 DEBUG = debug
-SRC_BASENAME = allocate_grid draw_grid free_2d_array get_run_mode run_simulation init_world scene_update
+SRC_BASENAME = allocate_grid draw_grid get_run_mode run_simulation init_world scene_update
 CU_SRC_BASENAME =  run_simulation_cuda main
 SRCS = $(addsuffix .c, $(SRC_BASENAME))
 CU_SRCS = $(addsuffix .cu, $(CU_SRC_BASENAME))

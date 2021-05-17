@@ -40,7 +40,6 @@ void    run_simulation(int* scene, SDL_Renderer *renderer, int delay) {
 static int evaluate_cell(int i, int j, int* scene) {
     int alive_cells = 0;
 
-    printf("evaluating index %d,%d\n", i, j);
     alive_cells = 
     (i > 0 && j > 0 && scene[(i - 1) * GRID_H + (j - 1)]) +
     (j > 0 && scene[i * GRID_H + (j - 1)]) +
@@ -52,6 +51,5 @@ static int evaluate_cell(int i, int j, int* scene) {
     (i > 0 && j < GRID_W - 1 && scene[(i - 1) * GRID_H + (j + 1)]) +
     (j < GRID_W - 1 && scene[i * GRID_H + (j + 1)]) +
     (i < GRID_H - 1 && j < GRID_W - 1 && scene[(i + 1) * GRID_H + (j + 1)]);
-    printf("success\n");
     return (alive_cells == 3 || (alive_cells == 2 && scene[i * GRID_H + j] == 1));
 }
