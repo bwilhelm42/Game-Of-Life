@@ -48,6 +48,10 @@ extern "C" void    run_simulation_cuda(int* h_scene, SDL_Renderer *renderer, int
         scene = updated_scene;
         updated_scene = temp;
     }
+    for (int i = 0; i < num_streams; i++) {
+        cudaStreamDestroy(streams[i]);
+    }
+    free(streams);
     cudaFree(updated_scene);
     cudaFree(scene);
     cudaFree(h_scene);
