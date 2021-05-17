@@ -41,3 +41,9 @@ WHAT IS MY REASONING FOR USING AS FEW CUDA FILES AS POSSIBLE???
 I do this to maintain clarity of code. I believe that with many file, if I'm able to only utilize files with a .cu extension on fragments of code that are running the kernels
 it is much easier to pick apart the code and pinpoint where cuda is being used. As mentioned above, I may make a slight exception to this rule so I can create pinned memory for
 a different function.
+Making the data to test so large that I ran out of stack size when trying to pin the memory
+
+Understanding why this happens is on my TODO list:
+Issue with the memory seemingly not copying over correctly was due to launching the kernel with more blocks than nessesary,
+I haven't yet determined precisely why it caused the specific error I encountered but do recreate it I need to use a large
+number of threads and blocks (1024,1024) for example and a small grid size such as 40X40.
